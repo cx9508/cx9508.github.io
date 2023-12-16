@@ -13,24 +13,24 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="John Doe">
+  <meta name="author" content="陈晓">
   <meta name="keywords" content="">
   
-    <meta name="description" content="2D-2D特征点匹配法计算相机运动一.基础知识在介绍通过2D图像之间的特征点匹配计算相机运动之前，不得不介绍一下相关的基础知识，主要包括相机成像的原理，针孔相机模型以及齐次坐标系的介绍。 1.相机成像原理首先，我们来看一下一张照片是如何拍出来的，下面是一个单反相机。   我们将该相机的主要结构抽象出来，如下所示。   我们的拍照过程通常是这样：找到一个合适的角度，通过取景器⑧观察画面，当画面符合我">
+    <meta name="description" content="介绍相机成像的基本原理以及真实世界中的点与相机在不同视角下成像的对应点之间的几何约束关系。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2D-2D特征点匹配法计算相机运动">
-<meta property="og:url" content="http://example.com/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/index.html">
+<meta property="og:url" content="http://cxspace.org.cn/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/index.html">
 <meta property="og:site_name" content="chenxiao">
-<meta property="og:description" content="2D-2D特征点匹配法计算相机运动一.基础知识在介绍通过2D图像之间的特征点匹配计算相机运动之前，不得不介绍一下相关的基础知识，主要包括相机成像的原理，针孔相机模型以及齐次坐标系的介绍。 1.相机成像原理首先，我们来看一下一张照片是如何拍出来的，下面是一个单反相机。   我们将该相机的主要结构抽象出来，如下所示。   我们的拍照过程通常是这样：找到一个合适的角度，通过取景器⑧观察画面，当画面符合我">
+<meta property="og:description" content="介绍相机成像的基本原理以及真实世界中的点与相机在不同视角下成像的对应点之间的几何约束关系。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/images/example.jpg">
-<meta property="article:published_time" content="2019-10-10T02:00:00.000Z">
-<meta property="article:modified_time" content="2023-12-16T15:21:37.130Z">
-<meta property="article:author" content="John Doe">
-<meta property="article:tag" content="Hexo">
-<meta property="article:tag" content="Fluid">
+<meta property="og:image" content="http://cxspace.org.cn/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906125519206.png">
+<meta property="article:published_time" content="2022-09-06T02:00:00.000Z">
+<meta property="article:modified_time" content="2023-12-16T16:05:14.529Z">
+<meta property="article:author" content="陈晓">
+<meta property="article:tag" content="图像配准">
+<meta property="article:tag" content="科研">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/images/example.jpg">
+<meta name="twitter:image" content="http://cxspace.org.cn/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906125519206.png">
   
   
   
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"cxspace.org.cn","root":"/","version":"1.9.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -211,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2019-10-10 10:00" pubdate>
-          October 10, 2019 am
+        <time datetime="2022-09-06 10:00" pubdate>
+          September 6, 2022 am
         </time>
       </span>
     
@@ -278,10 +278,10 @@
                 
                 <h3 id="2D-2D特征点匹配法计算相机运动"><a href="#2D-2D特征点匹配法计算相机运动" class="headerlink" title="2D-2D特征点匹配法计算相机运动"></a>2D-2D特征点匹配法计算相机运动</h3><h4 id="一-基础知识"><a href="#一-基础知识" class="headerlink" title="一.基础知识"></a>一.基础知识</h4><p>在介绍通过2D图像之间的特征点匹配计算相机运动之前，不得不介绍一下相关的基础知识，主要包括相机成像的原理，针孔相机模型以及齐次坐标系的介绍。</p>
 <h5 id="1-相机成像原理"><a href="#1-相机成像原理" class="headerlink" title="1.相机成像原理"></a>1.相机成像原理</h5><p>首先，我们来看一下一张照片是如何拍出来的，下面是一个单反相机。</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906125008273.png" srcset="/img/loading.gif" lazyload alt="image-20220906125008273" style="zoom: 50%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906125008273.png" srcset="/img/loading.gif" lazyload alt="image-20220906125008273" style="zoom: 50%;">
 
 <p>我们将该相机的主要结构抽象出来，如下所示。</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906125519206.png" srcset="/img/loading.gif" lazyload alt="image-20220906125519206" style="zoom:50%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906125519206.png" srcset="/img/loading.gif" lazyload alt="image-20220906125519206" style="zoom:50%;">
 
 <p>我们的拍照过程通常是这样：找到一个合适的角度，通过取景器⑧观察画面，当画面符合我们要求时，按下快门，就完成了拍照的过程。</p>
 <p>以上这个简单的拍照过程，主要包含两个步骤，一是取景，二是按快门。我们在做这两个动作的时候发生了什么呢？</p>
@@ -289,13 +289,13 @@
 <p>然后是按快门，在按快门之前，反光镜位于②位置，用于反射光线以便我们取景，当我们按下快门的瞬间，反光镜从②拉到⑤，这样光线就直接射到传感器③上，照片就形成了。</p>
 <h4 id="二-相机模型"><a href="#二-相机模型" class="headerlink" title="二.相机模型"></a>二.相机模型</h4><p>相机将三维世界的坐标点映射到二维图像平面的过程可以用一个几何模型来描述，我们称这个模型为相机模型。相机模型有很多种，最简单的是针孔相机模型。</p>
 <p>针孔相机模型背后的原理就是小孔成像原理，我们来复习一下小孔成像原理，通过下面这个实验来唤醒大家的记忆。</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906132354607.png" srcset="/img/loading.gif" lazyload alt="image-20220906132354607" style="zoom:33%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906132354607.png" srcset="/img/loading.gif" lazyload alt="image-20220906132354607" style="zoom:33%;">
 
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906132216158.png" srcset="/img/loading.gif" lazyload alt="image-20220906132216158" style="zoom: 33%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906132216158.png" srcset="/img/loading.gif" lazyload alt="image-20220906132216158" style="zoom: 33%;">
 
 <p>上面这个实验我们可以观察到，F形状的光源发射的光线通过中间的带有小孔的挡板，在最右侧的成像板上形成一个倒立的F图像。</p>
 <p>我们可以通过小孔成像模型来解释针孔相机模型。将模型抽象得到下图。</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906140414382.png" srcset="/img/loading.gif" lazyload alt="image-20220906140414382" style="zoom:50%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906140414382.png" srcset="/img/loading.gif" lazyload alt="image-20220906140414382" style="zoom:50%;">
 
 <p>其中P是世界中真实的点，P&#96;是P在二维图像中的投影点。</p>
 <p>针孔相机模型总共包括4个坐标系，分别是像素坐标系、图像坐标系、相机坐标系和世界坐标系</p>
@@ -304,38 +304,38 @@
 <p><strong>我们研究这个针孔相机模型的目的就是为了确定P&#96;和P之间的几何关系</strong>。</p>
 <p>设P在相机坐标系下的坐标为（X,Y,Z）,P&#96;在图像坐标系下的坐标为（X‘，Y‘，Z‘）,我们最后想得到的是像素坐标系下的P‘和相机坐标系下的P之间的关系。</p>
 <p>首先，我们通过相机模型可以得到一个相似三角形</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906152439601.png" srcset="/img/loading.gif" lazyload alt="image-20220906152439601" style="zoom:50%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906152439601.png" srcset="/img/loading.gif" lazyload alt="image-20220906152439601" style="zoom:50%;">
 
 <p>其中f是焦距（光心到成像平面中心的距离），根据相似三角形的关系，我们可以得到</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906153318214.png" srcset="/img/loading.gif" lazyload alt="image-20220906153318214" style="zoom:80%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906153318214.png" srcset="/img/loading.gif" lazyload alt="image-20220906153318214" style="zoom:80%;">
 
 <p>其中负号表示成像是倒立的。为了方便，我们将成像平面根据光心做中心对称。</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906153519037.png" srcset="/img/loading.gif" lazyload alt="image-20220906153519037" style="zoom:50%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906153519037.png" srcset="/img/loading.gif" lazyload alt="image-20220906153519037" style="zoom:50%;">
 
 <p>得到如下关系：</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906153624669.png" srcset="/img/loading.gif" lazyload alt="image-20220906153624669" style="zoom: 80%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906153624669.png" srcset="/img/loading.gif" lazyload alt="image-20220906153624669" style="zoom: 80%;">
 
 <p>整理得</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906173327131.png" srcset="/img/loading.gif" lazyload alt="image-20220906173327131" style="zoom:50%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906173327131.png" srcset="/img/loading.gif" lazyload alt="image-20220906173327131" style="zoom:50%;">
 
 <p><strong>像素坐标系下的P‘和图像坐标系下的P‘的关系</strong></p>
 <p>已知P‘点在图像坐标系上的坐标，求P‘点在像素坐标系上的坐标。</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906173226600.png" srcset="/img/loading.gif" lazyload alt="image-20220906173226600" style="zoom:33%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906173226600.png" srcset="/img/loading.gif" lazyload alt="image-20220906173226600" style="zoom:33%;">
 
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906173352530.png" srcset="/img/loading.gif" lazyload alt="image-20220906173352530" style="zoom:50%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906173352530.png" srcset="/img/loading.gif" lazyload alt="image-20220906173352530" style="zoom:50%;">
 
 <p>其中，cx和cy表示图像坐标原点到像素坐标原点的位移（单位为像素），α和β分别表示图像坐标系中x轴和y轴每单位有多少个像素，单位为（像素&#x2F;米）。</p>
 <p><strong>像素坐标系下的P‘和相机坐标系下的P之间的关系</strong></p>
 <p>结合式（5,3）,把αf合并为fx，βf合并为fy，（5,4）式可转化为相机坐标系中的P点和其在像素坐标系上的投影点P&#96;之间的关系</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906173530923.png" srcset="/img/loading.gif" lazyload alt="image-20220906173530923" style="zoom: 50%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906173530923.png" srcset="/img/loading.gif" lazyload alt="image-20220906173530923" style="zoom: 50%;">
 
 <p>把（u,v）用转成齐次坐标并将上式写成矩阵形式</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906173706053.png" srcset="/img/loading.gif" lazyload alt="image-20220906173706053" style="zoom:50%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906173706053.png" srcset="/img/loading.gif" lazyload alt="image-20220906173706053" style="zoom:50%;">
 
-<p>其中K&#x3D;<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906174040157.png" srcset="/img/loading.gif" lazyload alt="image-20220906174040157" style="zoom:33%;">称为<strong>相机的内参</strong></p>
+<p>其中K&#x3D;<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906174040157.png" srcset="/img/loading.gif" lazyload alt="image-20220906174040157" style="zoom:33%;">称为<strong>相机的内参</strong></p>
 <p>将5.6式中1&#x2F;Z的值并入（X,Y,Z)^T向量，相当于P点在相机坐标系下的坐标(X,Y,Z)除以Z，即（X&#x2F;Z,Y&#x2F;Z,1)，我们称这个坐标为P点在<strong>归一化平面</strong>上的坐标。从而我们得到了像素坐标系下的P&#96;和归一化平面上P的关系：即归一化平面上P的坐标左乘相机内参K就得到了像素坐标系下的P’。</p>
 <h4 id="三-对极几何"><a href="#三-对极几何" class="headerlink" title="三.对极几何"></a>三.对极几何</h4><p>这部分，我们将介绍真实世界中的点与相机在不同视角下成像的对应点之间的几何约束关系。</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906180251744.png" srcset="/img/loading.gif" lazyload alt="image-20220906180251744" style="zoom:50%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220906180251744.png" srcset="/img/loading.gif" lazyload alt="image-20220906180251744" style="zoom:50%;">
 
 <p>上图P是真实世界的点，p1是相机光心位于O1时，P点投影到投影平面I1上的对应点，同理，p2是相机光心位于O2时，P点投影到投影平面I2上的对应点。</p>
 <p>连接O1和O2，连线和两个投影面的交点e1,e2称为<strong>极点</strong>。</p>
@@ -343,39 +343,39 @@
 <p>极平面与投影平面的相交线称为<strong>极线</strong>。</p>
 <p>当我们不知道p1在投影平面I2上的对应点p2时，我们就无法确定P的具体位置，但我们可以知道P一定在O1与p1连接线射线上，也可以确定极平面，通过极平面我们可以确定极线，虽然我们无法确定p2的具体位置，但我们可以知道p2一定在极线上。</p>
 <h5 id="1-p1和p2之间的几何约束"><a href="#1-p1和p2之间的几何约束" class="headerlink" title="1.p1和p2之间的几何约束"></a>1.p1和p2之间的几何约束</h5><p>当相机光心位于O1时，即相机坐标系原点位于O1时，设P在相机坐标系下坐标为（X,Y,Z)。通过第二部分介绍的内容，我们可以知道p1和P之间的几何关系为</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220907163501707.png" srcset="/img/loading.gif" lazyload alt="image-20220914164835353" style="zoom: 70%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220907163501707.png" srcset="/img/loading.gif" lazyload alt="image-20220914164835353" style="zoom: 70%;">
 
 <p>记为式（5.7），其中s1就是Z。</p>
 <p>当相机光心位于O2时，O1到O2的变换关系为O2&#x3D;RO1+t，其中R代表旋转，t代表平移。所以有</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220907163826376.png" srcset="/img/loading.gif" lazyload alt="image-20220914164835353" style="zoom: 70%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220907163826376.png" srcset="/img/loading.gif" lazyload alt="image-20220914164835353" style="zoom: 70%;">
 
 <p>记为式（5.8），其中，假设相机坐标系原点位于O2时，且P在相机坐标系下坐标为（X2,Y2,Z2)，则s2就等于Z2，现在为了使相机坐标系统一，将O2的相机坐标系映射到O1，已知两个相机坐标系的变换关系，O2是O1通过旋转变换R和平移变换t得到的，所以（X2,Y2,Z2）&#x3D;R(X,Y,Z)+t。</p>
 <p>设P在相机坐标系O1的归一化平面上的坐标为x1，则由p1与x1关系为</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914164835353.png" srcset="/img/loading.gif" lazyload alt="image-20220914164835353" style="zoom: 33%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914164835353.png" srcset="/img/loading.gif" lazyload alt="image-20220914164835353" style="zoom: 33%;">
 
 <p>同理设P在相机坐标系O2的归一化平面上的坐标为x2，则p2与x2关系为</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914164801359.png" srcset="/img/loading.gif" lazyload alt="image-20220914164801359" style="zoom: 33%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914164801359.png" srcset="/img/loading.gif" lazyload alt="image-20220914164801359" style="zoom: 33%;">
 
 <p>代入式5.7和式5.8得</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914165319117.png" srcset="/img/loading.gif" lazyload alt="image-20220914165319117" style="zoom: 33%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914165319117.png" srcset="/img/loading.gif" lazyload alt="image-20220914165319117" style="zoom: 33%;">
 
 <p>整理得</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914170150719.png" srcset="/img/loading.gif" lazyload alt="image-20220914170150719" style="zoom: 33%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914170150719.png" srcset="/img/loading.gif" lazyload alt="image-20220914170150719" style="zoom: 33%;">
 
 <p>5.11两边同乘t^，即两边同时和t做外积得</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914170312941.png" srcset="/img/loading.gif" lazyload alt="image-20220914170312941" style="zoom: 33%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914170312941.png" srcset="/img/loading.gif" lazyload alt="image-20220914170312941" style="zoom: 33%;">
 
 <p>式5.12两边同乘x2^T,即两边同时和x2做内积得</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914170726917.png" srcset="/img/loading.gif" lazyload alt="image-20220914170726917" style="zoom: 33%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914170726917.png" srcset="/img/loading.gif" lazyload alt="image-20220914170726917" style="zoom: 33%;">
 
 <p>因为t和x2的外积t^x2同时垂直于t和x2，所以5.12式左侧与x2的内积为0，则有</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914171001932.png" srcset="/img/loading.gif" lazyload alt="image-20220914171001932" style="zoom: 33%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914171001932.png" srcset="/img/loading.gif" lazyload alt="image-20220914171001932" style="zoom: 33%;">
 
 <p>重新代入p1和p2得式5.15</p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914171245580.png" srcset="/img/loading.gif" lazyload alt="image-20220914171245580" style="zoom:50%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914171245580.png" srcset="/img/loading.gif" lazyload alt="image-20220914171245580" style="zoom:50%;">
 
 <p>我们把t^R记作基础矩阵F，把式5.15中间部分即为本质矩阵E，得到<strong>对极约束</strong></p>
-<img src="/2019/10/10/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914171744533.png" srcset="/img/loading.gif" lazyload alt="image-20220914171744533" style="zoom:50%;">
+<img src="/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/image-20220914171744533.png" srcset="/img/loading.gif" lazyload alt="image-20220914171744533" style="zoom:50%;">
 
 <p>由此，我们可以得到相机位姿估计问题求解步骤</p>
 <figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mathematica"><span class="hljs-number">1.</span>根据配对点的像素坐标求出<span class="hljs-built_in">E</span>或者<span class="hljs-variable">F</span>（八点法）<br><span class="hljs-number">2.</span>根据<span class="hljs-built_in">E</span>或<span class="hljs-variable">F</span>求出<span class="hljs-variable">R</span><span class="hljs-operator">,</span><span class="hljs-variable">t</span><br></code></pre></td></tr></table></figure>
@@ -391,13 +391,41 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="category-chain-item">人工智能</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%9B%BE%E5%83%8F%E5%8C%B9%E9%85%8D/" class="category-chain-item">图像匹配</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Hexo/" class="print-no-link">#Hexo</a>
+        <a href="/tags/%E5%9B%BE%E5%83%8F%E9%85%8D%E5%87%86/" class="print-no-link">#图像配准</a>
       
-        <a href="/tags/Fluid/" class="print-no-link">#Fluid</a>
+        <a href="/tags/%E7%A7%91%E7%A0%94/" class="print-no-link">#科研</a>
       
     </div>
   
@@ -410,19 +438,19 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>2D-2D特征点匹配法计算相机运动</div>
-      <div>http://example.com/2019/10/10/2D-2D特征点匹配法计算相机运动/</div>
+      <div>http://cxspace.org.cn/2022/09/06/2D-2D特征点匹配法计算相机运动/</div>
     </div>
     <div class="license-meta">
       
         <div class="license-meta-item">
           <div>Author</div>
-          <div>John Doe</div>
+          <div>陈晓</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>October 10, 2019</div>
+          <div>September 6, 2022</div>
         </div>
       
       
@@ -453,12 +481,6 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
-                    
-                      <a href="/2023/12/16/hello-world/" title="Hello World">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Hello World</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
                     
                   </article>
                   <article class="post-next col-6">
@@ -566,6 +588,17 @@
     </div>
   
   
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      闽ICP备2023003296号-1
+    </a>
+  </span>
+  
+</div>
+
   
   
 </div>
