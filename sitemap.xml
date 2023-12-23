@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://cxspace.org.cn/2022/09/06/2D-2D%E7%89%B9%E5%BE%81%E7%82%B9%E5%8C%B9%E9%85%8D%E6%B3%95%E8%AE%A1%E7%AE%97%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8/</loc>
+    
+    <lastmod>2023-12-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://cxspace.org.cn/about/index.html</loc>
+    
+    <lastmod>2023-12-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  <url>
+    <loc>http://cxspace.org.cn/</loc>
+    <lastmod>2023-12-23</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  
+  <url>
+    <loc>http://cxspace.org.cn/tags/%E5%9B%BE%E5%83%8F%E9%85%8D%E5%87%86/</loc>
+    <lastmod>2023-12-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://cxspace.org.cn/tags/%E7%A7%91%E7%A0%94/</loc>
+    <lastmod>2023-12-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+
+  
+  <url>
+    <loc>http://cxspace.org.cn/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/</loc>
+    <lastmod>2023-12-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://cxspace.org.cn/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%9B%BE%E5%83%8F%E5%8C%B9%E9%85%8D/</loc>
+    <lastmod>2023-12-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+</urlset>
